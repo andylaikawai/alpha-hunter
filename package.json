@@ -1,0 +1,16 @@
+{
+  "type": "module",
+  "dependencies": {
+    "express": "^4.18.1",
+    "request": "^2.88.2"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "name": "alpha-hunter",
+  "version": "1.0.0",
+  "description": "I am a hunter for alpha in crypto",
+  "main": "server.js",
+  "author": "Andy Lai",
+  "license": "ISC"
+}
