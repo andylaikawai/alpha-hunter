@@ -1,26 +1,44 @@
-import {kuCoinUrls, gateUrls} from "./config.js";
+import {binanceUrls, ftxUrls, gateUrls, kuCoinUrls} from "./config.js";
 import request from 'request'
+import {log} from "./util.js";
 
 const make_API_call = (url) => {
   return new Promise((resolve, reject) => {
+    log(`[API] Fetching: ${url}`,);
     request(url, {json: true}, (err, res, body) => {
-      if (err) reject(err);
-      resolve(body)
+      if (err) {
+        log(`[API] Error: ${err}`,);
+        reject(err);
+      }
+      log(`[API] Response: ${JSON.stringify(res)}`,);
+      resolve(res)
     });
   })
 };
 
 export const kuCoinApi = {
-  getMarketHistory: (ticker1, ticker2 = "USDT") => {
-    return make_API_call(kuCoinUrls.getMarketHistoryUrl(ticker1, ticker2))
+  getMarketHistory: (t1, t2 = "USDT") => {
+    return make_API_call(kuCoinUrls.getMarketHistoryUrl(t1, t2))
   },
-  getKline: (ticker1, ticker2, startAt, endAt) => {
-    return make_API_call(kuCoinUrls.getKlineUrl(ticker1, ticker2, startAt, endAt))
+  getKline: (t1, t2, startAt, endAt) => {
+    return make_API_call(kuCoinUrls.getKlineUrl(t1, t2, startAt, endAt))
   }
 };
 
 export const gateApi = {
-  getMarketHistory: ({ticker1, ticker2 = "USDT", from, to}) => {
-    return make_API_call(gateUrls.getMarketHistoryUrl({ticker1, ticker2, from, to}))
+  getMarketHistory: ({t1, t2 = "USDT", from, to}) => {
+    return make_API_call(gateUrls.getMarketHistoryUrl({t1, t2, from, to}))
   },
+};
+
+export const ftxApi = {
+  getMarketHistory: ({t1, t2 = "USDT", from, to}) => {
+    return make_API_call(ftxUrls.getMarketHistoryUrl({t1, t2, from, to}))
+  },
+};
+
+export const binanceApi = {
+  getListingAnnouncement: () => {
+    return make_API_call(binanceUrls.getListingAnnouncementUrl());
+  }
 };
