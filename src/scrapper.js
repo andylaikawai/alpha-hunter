@@ -1,0 +1,3 @@
+const scrapper = {
+  scra
+}

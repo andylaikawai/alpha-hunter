@@ -1,9 +1,17 @@
+import logToFile from 'log-to-file'
 const timeNow = () => {
   return new Date().toISOString();
 };
 
-export const log = (message) => {
+export const log = (message, toFile = false) => {
   console.log(`${timeNow()} ${message}`);
+  if (toFile) {
+    logFile(message)
+  }
+};
+
+export const logFile = (message) => {
+  logToFile(message, '../log/v1.log', '\r\n')
 };
 
 export const randomStr = (length) => {

@@ -3,7 +3,8 @@ import {randomStr, randomIntFromInterval, shuffleArray} from "./util.js";
 const KUCOIN_BASE_URL = "https://api.kucoin.com/api/v1";
 const GATE_BASE_URL = "https://api.gateio.ws/api/v4";
 const FTX_BASE_URL = "https://ftx.com/api";
-const BINANCE_BASE_URL = "https://www.binance.com/gateway-api/v1";
+const BINANCE_BASE_URL = "https://www.binance.com/bapi/composite/v1";
+const BINANCE_LISTING_URL = `${BINANCE_BASE_URL}/public/cms/article/catalog/list/query`;
 
 export const kuCoinUrls = {
   getMarketHistoryUrl: (t1, t2) => `${KUCOIN_BASE_URL}/market/histories?symbol=${t1}-${t2}`,
@@ -31,11 +32,12 @@ export const binanceUrls = {
     const randStrLength = randomIntFromInterval(10, 20);
     const randStr = randomStr(randStrLength);
     const epochTime = Math.round(Date.now() / 1000);
-    const queries = ["type=1", "catalogId=48", "pageNo=1", `pageSize=${randPageSize}`, `rnd=${epochTime}`, `${randStr}=${randInt}`];
+    // const queries = ["type=1", "catalogId=48", "pageNo=1", `pageSize=${randPageSize}`, `rnd=${epochTime}`, `${randStr}=${randInt}`];
+    const queries = ["catalogId=48", "pageNo=1", `pageSize=${randPageSize}`];
     shuffleArray(queries);
-    const params = `${queries[0]}&${queries[1]}&${queries[2]}&${queries[3]}&${queries[4]}&${queries[5]}`;
+    const params = queries.join("&")
 
-    return `${BINANCE_BASE_URL}/public/cms/article/list/query?${params}`;
+    return `${BINANCE_LISTING_URL}?${params}`;
   }
 };
 

@@ -1,4 +1,4 @@
-import {binanceApi, ftxApi, gateApi} from "./api-helper.js";
+import {binanceApi, ftxApi, gateApi} from "./api.js";
 import express from 'express'
 import {main} from "./main.js";
 import {log} from "./util.js";
@@ -22,7 +22,6 @@ app.get('/market', (req, res) => {
     });
 });
 
-// https://download.gatedata.org/spot/candlesticks/202205/LDO_USDT-202205.csv.gz
 app.get('/download', (req, res) => {
   gateApi.getMarketHistory({})
     .then(response => {
@@ -39,16 +38,5 @@ app.get('/fetch-listing', (req, res) => {
 
 app.listen(port, () => {
   log(`Alpha hunter listening on port ${port}`);
-  binanceApi.getListingAnnouncement()
-    .then(response => {
-      if (response.statusCode === 200) {
-        const latestArticle = response.body.data.catalogs[0].articles[0];        const title = latestArticle.title;
-        const releaseDate = new Date(latestArticle.releaseDate);
-        console.log(title);
-        console.log(releaseDate.toISOString());
-        const coin = title.match(/\(([^)]+)/)
-        console.log(coin)
-      }
-    });
   main()
 });
