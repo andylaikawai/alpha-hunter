@@ -1,7 +1,7 @@
-import {binanceApi, ftxApi, gateApi} from "./api.js";
+import { binanceApi, ftxApi, gateApi } from "./api.js";
 import express from 'express'
-import {main} from "./main.js";
-import {log} from "./util.js";
+import { main } from "./main.js";
+import { log } from "./util.js";
 
 const app = express();
 const port = 3000;

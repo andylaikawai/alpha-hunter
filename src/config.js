@@ -1,4 +1,4 @@
-import {randomStr, randomIntFromInterval, shuffleArray} from "./util.js";
+import { shuffleArray } from "./util.js";
 
 const KUCOIN_BASE_URL = "https://api.kucoin.com/api/v1";
 const GATE_BASE_URL = "https://api.gateio.ws/api/v4";
@@ -27,13 +27,7 @@ export const ftxUrls = {
 
 export const binanceUrls = {
   getListingAnnouncementUrl: () => {
-    const randPageSize = randomIntFromInterval(1, 10);
-    const randInt = Math.ceil(Math.random() * 99999999999999999999);
-    const randStrLength = randomIntFromInterval(10, 20);
-    const randStr = randomStr(randStrLength);
-    const epochTime = Math.round(Date.now() / 1000);
-    // const queries = ["type=1", "catalogId=48", "pageNo=1", `pageSize=${randPageSize}`, `rnd=${epochTime}`, `${randStr}=${randInt}`];
-    const queries = ["catalogId=48", "pageNo=1", `pageSize=${randPageSize}`];
+    const queries = ["catalogId=48", "pageNo=1", `pageSize=1`];
     shuffleArray(queries);
     const params = queries.join("&")
 

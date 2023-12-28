@@ -1,4 +1,5 @@
 import logToFile from 'log-to-file'
+
 const timeNow = () => {
   return new Date().toISOString();
 };
