@@ -1,17 +1,40 @@
-import {binanceUrls, ftxUrls, gateUrls, kuCoinUrls} from "./config.js";
-import request from 'request'
-import {log, logFile} from "./util.js";
+import { binanceUrls, DEBUG_MODE, ftxUrls, gateUrls, kuCoinUrls } from "./config.js";
+import { log } from "./util.js";
+import { ZenRows } from 'zenrows'
+import request from "request";
 
-const fetchFromUrl = (url) => {
+const client = new ZenRows("d5e8e87cc157e5f312ba2266642c0d38061f4abd");
+
+const fetch = async (url, useZenRows = false) => {
+  // log(`[API] Fetching: ${url}`,);
+  if (useZenRows) {
+    return fetchWithZenRows(url)
+  } else {
+    return fetchBasic(url)
+  }
+}
+const fetchWithZenRows = async (url) => {
+  try {
+    const {data} = await client.get(url, {});
+    return data.data
+  } catch (error) {
+    log(`[Heartbeat] Error. Message: ${error.message}`, true)
+    if (error.response) {
+      log(`[Heartbeat] Error. Response data: ${error.response.data}`, true)
+    }
+  }
+}
+
+const fetchBasic = (url) => {
   return new Promise((resolve, reject) => {
-    log(`[API] Fetching: ${url}`,);
-    request(url, {json: true}, (err, res, body) => {
+    request(url, {json: true}, (err, res) => {
       if (err) {
-        // log(`[API] Error: ${err}`, true);
+        log(`[Heartbeat] Error: ${err}`, true)
         reject(err);
+      } else if (res.statusCode !== 200) {
+        log(`[Heartbeat] Error. Status code: ${res.statusCode}`, true)
       } else {
-        // log(`[API] Response: ${JSON.stringify(res)}`, true);
-        resolve(res)
+        resolve(res.body.data)
       }
     });
   })
@@ -19,27 +42,27 @@ const fetchFromUrl = (url) => {
 
 export const kuCoinApi = {
   getMarketHistory: (t1, t2 = "USDT") => {
-    return fetchFromUrl(kuCoinUrls.getMarketHistoryUrl(t1, t2))
+    return fetch(kuCoinUrls.getMarketHistoryUrl(t1, t2))
   },
   getKline: (t1, t2, startAt, endAt) => {
-    return fetchFromUrl(kuCoinUrls.getKlineUrl(t1, t2, startAt, endAt))
+    return fetch(kuCoinUrls.getKlineUrl(t1, t2, startAt, endAt))
   }
 };
 
 export const gateApi = {
   getMarketHistory: ({t1, t2 = "USDT", from, to}) => {
-    return fetchFromUrl(gateUrls.getMarketHistoryUrl({t1, t2, from, to}))
+    return fetch(gateUrls.getMarketHistoryUrl({t1, t2, from, to}))
   },
 };
 
 export const ftxApi = {
   getMarketHistory: ({t1, t2 = "USDT", from, to}) => {
-    return fetchFromUrl(ftxUrls.getMarketHistoryUrl({t1, t2, from, to}))
+    return fetch(ftxUrls.getMarketHistoryUrl({t1, t2, from, to}))
   },
 };
 
 export const binanceApi = {
   getListingAnnouncement: () => {
-    return fetchFromUrl(binanceUrls.getListingAnnouncementUrl());
+    return fetch(binanceUrls.getListingAnnouncementUrl(), !DEBUG_MODE);
   }
 };
