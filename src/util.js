@@ -1,7 +1,9 @@
 import logToFile from 'log-to-file'
 
 const timeNow = () => {
-  return new Date().toISOString();
+  const date = new Date()
+  date.setMinutes(date.getMinutes() - date.getTimezoneOffset())
+  return date.toISOString()
 };
 
 export const log = (message, toFile = false) => {

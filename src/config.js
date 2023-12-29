@@ -1,4 +1,5 @@
-import { shuffleArray } from "./util.js";
+export const DEBUG_MODE = true // TODO move to env variable
+export const API_THROTTLE = 5
 
 const KUCOIN_BASE_URL = "https://api.kucoin.com/api/v1";
 const GATE_BASE_URL = "https://api.gateio.ws/api/v4";
@@ -28,7 +29,6 @@ export const ftxUrls = {
 export const binanceUrls = {
   getListingAnnouncementUrl: () => {
     const queries = ["catalogId=48", "pageNo=1", `pageSize=1`];
-    shuffleArray(queries);
     const params = queries.join("&")
 
     return `${BINANCE_LISTING_URL}?${params}`;

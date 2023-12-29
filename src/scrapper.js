@@ -4,12 +4,11 @@ import { log } from "./util.js";
 export const newBinanceListing = () => {
   binanceApi.getListingAnnouncement()
     .then(response => {
-      if (response.statusCode === 200) {
+      if (response) {
         log(`[Heartbeat] Succeed`, true)
-        const latestArticle = response.body.data.articles[0];
+        const latestArticle = response.articles[0];
         getListingCoinFromArticle(latestArticle)
       } else {
-        log(`[Heartbeat] Error. Response code: ${response.statusCode}`, true)
       }
     });
 }

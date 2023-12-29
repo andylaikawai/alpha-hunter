@@ -1,4 +1,5 @@
 import { newBinanceListing } from "./scrapper.js";
+import { API_THROTTLE } from "./config.js";
 
 export const main = () => {
   fetchListing();
@@ -10,7 +11,7 @@ export const main = () => {
  *
  * @param timeout
  */
-const fetchListing = (timeout = 3) => {
+const fetchListing = (timeout = API_THROTTLE) => {
   const timeoutInMillisecond = timeout * 1000;
   newBinanceListing()
   setTimeout(fetchListing, timeoutInMillisecond)
