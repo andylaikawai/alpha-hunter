@@ -1,4 +1,4 @@
-export const API_THROTTLE = 5
+export const API_THROTTLE = 0.02
 
 const KUCOIN_BASE_URL = "https://api.kucoin.com/api/v1";
 const GATE_BASE_URL = "https://api.gateio.ws/api/v4";
