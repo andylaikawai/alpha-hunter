@@ -1,7 +1,8 @@
-import { binanceApi } from "./api.js";
-import { log } from "./util.js";
+import { binanceApi } from './api.js';
+import { log } from './util.js';
 
-export const newBinanceListing = () => {
+
+export const newBinanceListing = (): void => {
   binanceApi.getListingAnnouncement()
     .then(response => {
       if (response) {
@@ -14,15 +15,21 @@ export const newBinanceListing = () => {
 }
 
 
-let lastArticleCode = null
+let lastArticleCode: string | null = null
+
+interface IArticle {
+  code: string,
+  title: string
+}
+
 /**
  * Given the latestArticle fetched from Binance, determine if it is a new coin listing
  *
  * @param latestArticle
  */
-const getListingCoinFromArticle = (latestArticle) => {
+const getListingCoinFromArticle = (latestArticle: IArticle): void => {
   if (lastArticleCode !== latestArticle.code) {
-    log(`New announcement found: ${latestArticle.title}`, true);
+    log(`[Alert] New announcement found: ${latestArticle.title}`, true);
     lastArticleCode = latestArticle.code;
 
     const coinMatched = latestArticle.title.match(/\(([^)]+)/);
@@ -31,11 +38,11 @@ const getListingCoinFromArticle = (latestArticle) => {
 
     if (isNewCoinListing && coinMatched) {
       const coin = coinMatched[0].replace('(', '');
-      log(`New listing coin found: ${coin}`, true);
+      log(`[Alert] New listing coin found: ${coin}`, true);
 
       // TODO NOW YOU CAN BUY!
     } else {
-      log(`Not a coin listing announcement`, true)
+      log(`[Alert] Not a coin listing announcement`, true)
     }
   }
 };

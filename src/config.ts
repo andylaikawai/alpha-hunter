@@ -27,7 +27,7 @@ export const ftxUrls = {
 };
 
 export const binanceUrls = {
-  getListingAnnouncementUrl: () => {
+  getListingAnnouncementUrl: (): string => {
     const queries = ["catalogId=48", "pageNo=1", `pageSize=1`];
     const params = queries.join("&")
 

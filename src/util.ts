@@ -1,20 +1,20 @@
 import logToFile from 'log-to-file'
 
-const timeNow = () => {
+const timeNow = (): string => {
   const date = new Date()
   date.setMinutes(date.getMinutes() - date.getTimezoneOffset())
   return date.toISOString()
 };
 
-export const log = (message, toFile = false) => {
+export const log = (message: string, toFile: boolean = false) => {
   console.log(`${timeNow()} ${message}`);
   if (toFile) {
     logFile(message)
   }
 };
 
-export const logFile = (message) => {
-  logToFile(message, '../log/v1.log', '\r\n')
+export const logFile = (message: string) => {
+  logToFile(message, 'log/v1.log', '\r\n')
 };
 
 export const randomStr = (length) => {

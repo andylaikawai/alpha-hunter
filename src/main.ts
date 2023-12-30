@@ -1,5 +1,6 @@
-import { newBinanceListing } from "./scrapper.js";
-import { API_THROTTLE } from "./config.js";
+import { API_THROTTLE } from './config.js';
+import { newBinanceListing } from './scrapper.js';
+
 
 export const main = () => {
   fetchListing();
