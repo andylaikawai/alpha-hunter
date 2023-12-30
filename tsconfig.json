@@ -8,7 +8,8 @@
     "esModuleInterop": true,
     "strict": true,
     "noImplicitAny": false,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "sourceMap": true
     /* More options... */
   },
   "include": [

@@ -1,7 +1,7 @@
-import { binanceUrls, DEBUG_MODE, ftxUrls, gateUrls, kuCoinUrls } from "./config.js";
+import { binanceUrls, DEBUG_MODE, gateUrls, kuCoinUrls } from "./config.js";
 import { ZenRows } from 'zenrows'
-import request from "request";
 import { log } from './util.js';
+import axios from 'axios';
 
 const client = new ZenRows("d5e8e87cc157e5f312ba2266642c0d38061f4abd");
 
@@ -15,29 +15,23 @@ const fetch = async (url: string, useZenRows = false): Promise<any> => {
 }
 const fetchWithZenRows = async (url: string): Promise<any> => {
   try {
-    const {data} = await client.get(url, {});
-    return data.data
+    const { data } = await client.get(url, {});
+    return data
   } catch (error: any) {
-    log(`[Heartbeat] Error. Message: ${error.message}`, true)
+    log(`[API] Error. Message: ${error.message}`, true)
     if (error.response) {
-      log(`[Heartbeat] Error. Response data: ${error.response.data}`, true)
+      log(`[API] Error. Response data: ${error.response.data}`, true)
     }
   }
 }
 
-const fetchBasic = (url: string): Promise<any> => {
-  return new Promise((resolve, reject) => {
-    request(url, {json: true}, (err, res) => {
-      if (err) {
-        log(`[Heartbeat] Error: ${err}`, true)
-        reject(err);
-      } else if (res.statusCode !== 200) {
-        log(`[Heartbeat] Error. Status code: ${res.statusCode}`, true)
-      } else {
-        resolve(res.body.data)
-      }
-    });
-  })
+const fetchBasic = async (url: string): Promise<any> => {
+  try {
+    return await axios.get(url)
+  } catch (error) {
+    log(`[API] Error: ${error}`, true)
+  }
+  // log(`[Heartbeat] Error. Status code: ${res.statusCode}`, true)
 };
 
 export const kuCoinApi = {
@@ -50,8 +44,8 @@ export const kuCoinApi = {
 };
 
 export const gateApi = {
-  getMarketHistory: ({t1, t2 = "USDT", from, to}) => {
-    return fetch(gateUrls.getMarketHistoryUrl({t1, t2, from, to}))
+  getMarketHistory: ({ t1, t2 = "USDT", from, to }) => {
+    return fetch(gateUrls.getMarketHistoryUrl({ t1, t2, from, to }))
   },
 };
 

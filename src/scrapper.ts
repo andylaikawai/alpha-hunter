@@ -2,16 +2,16 @@ import { binanceApi } from './api.js';
 import { log } from './util.js';
 
 
-export const newBinanceListing = (): void => {
-  binanceApi.getListingAnnouncement()
-    .then(response => {
-      if (response) {
-        log(`[Heartbeat] Succeed`, true)
-        const latestArticle = response.articles[0];
-        getListingCoinFromArticle(latestArticle)
-      } else {
-      }
-    });
+export const newBinanceListing = async () => {
+  const response = await binanceApi.getListingAnnouncement()
+  const statusCode = response.status;
+  if (response && statusCode === 200) {
+    log(`[Heartbeat] Succeed`, true)
+    const latestArticle = response.data.data.articles[0];
+    getListingCoinFromArticle(latestArticle)
+  } else {
+    log(`[Heartbeat] Error status code: ${statusCode}`, true)
+  }
 }
 
 
