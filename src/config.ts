@@ -1,4 +1,3 @@
-export const DEBUG_MODE = true // TODO move to env variable
 export const API_THROTTLE = 5
 
 const KUCOIN_BASE_URL = "https://api.kucoin.com/api/v1";
