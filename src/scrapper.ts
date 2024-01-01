@@ -1,4 +1,4 @@
-import { binanceApi } from './api.js';
+import { binanceApi } from './api/api.js';
 import logger from './logger.js';
 
 

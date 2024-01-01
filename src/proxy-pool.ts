@@ -31,7 +31,7 @@ export class Proxy {
     this._priority -= 1
     this._failCount += 1
     if (this.isBlocked()) {
-      logger.info(`[Proxy] Blocked proxy ${this.host}. Success count: ${this._successCount}. Failed count: ${this._failCount}`, true)
+      logger.debug(`[Proxy] Blocked proxy ${this.host}. Success count: ${this._successCount}. Failed count: ${this._failCount}`, true)
     }
   }
 

@@ -1,7 +1,7 @@
-import { binanceUrls, gateUrls, kuCoinUrls } from "./config.js";
+import { binanceUrls, gateUrls, kuCoinUrls } from "../config.js";
 import axios from 'axios';
-import { ProxyPool } from './proxy-pool.js';
-import logger from './logger.js';
+import logger from '../logger.js';
+import { ProxyPool } from '../proxy-pool.js';
 
 const headers = {
   "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
