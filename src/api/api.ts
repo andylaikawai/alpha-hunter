@@ -1,7 +1,12 @@
-import { binanceUrls, gateUrls, kuCoinUrls } from "../config.js";
+import {
+  BINANCE_LISTING_URL,
+  GATE_MARKET_HISTORY_URL,
+  KUCOIN_KLINE_URL,
+  KUCOIN_MARKET_HISTORY_URL,
+} from "../config.js";
 import axios from 'axios';
 import logger from '../logger.js';
-import { ProxyPool } from '../proxy-pool.js';
+import { ProxyPool } from './proxy/proxyPool.js';
 
 const headers = {
   "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
@@ -50,6 +55,28 @@ const fetch = async (url: string): Promise<any> => {
   }
 }
 
+
+const binanceUrls = {
+  getBinanceListingAnnouncementUrl: () => {
+    const queries = ["catalogId=48", "pageNo=1", `pageSize=1`];
+    const params = queries.join("&")
+
+    return `${BINANCE_LISTING_URL}?${params}`;
+  }
+}
+
+const kuCoinUrls = {
+  getMarketHistoryUrl: (t1, t2) => `${KUCOIN_MARKET_HISTORY_URL}?symbol=${t1}-${t2}`,
+  getKlineUrl: (t1, t2, startAt, endAt) => `${KUCOIN_KLINE_URL}?type=1min&symbol=${t1}-${t2}&startAt=${startAt}&endAt=${endAt}`
+};
+
+const gateUrls = {
+  getMarketHistoryUrl: ({ t1, t2, from, to }) => {
+    const params = `currency_pair=${t1}_${t2}&from=${from}&to=${to}`;
+    return `${GATE_MARKET_HISTORY_URL}?${params}`;
+  }
+};
+
 export const kuCoinApi = {
   getMarketHistory: (t1, t2 = "USDT") => {
     return fetch(kuCoinUrls.getMarketHistoryUrl(t1, t2))
@@ -67,7 +94,6 @@ export const gateApi = {
 
 export const binanceApi = {
   getListingAnnouncement: (): Promise<any> => {
-    return fetch(binanceUrls.getListingAnnouncementUrl());
-    // return fetch('https://httpbin.org/ip'); // TEST
+    return fetch(binanceUrls.getBinanceListingAnnouncementUrl());
   }
 };

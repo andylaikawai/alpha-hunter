@@ -1,25 +1,10 @@
-import express from 'express'
-import { main } from "./main.js";
+import app from './app.js';
 import logger from './logger.js';
+import { scrapeNewBinanceListingCoinLoop } from './api/services/scrapperService.js';
 
-const app = express();
-const port = 3000;
+const PORT = process.env.PORT || 3000;
 
-// TODO
-// app.get('/download', (req, res) => {
-//   gateApi.getMarketHistory({t1: "BTC", t2: "USDT"})
-//     .then(response => {
-//       res.json(response)
-//     })
-//     .catch(error => {
-//       res.send(error)
-//     });
-// });
-
-
-app.listen(port, () => {
-  logger.info(`Alpha hunter listening on port ${port}`);
-  main()
+app.listen(PORT, () => {
+  logger.info(`Alpha hunter listening on port ${PORT}`);
+  scrapeNewBinanceListingCoinLoop()
 });
-
-export { app }

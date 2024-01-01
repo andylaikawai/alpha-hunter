@@ -1,5 +1,5 @@
-import { PROXY_INVENTORY } from './proxy-inventory.js';
-import logger from './logger.js';
+import { PROXY_INVENTORY } from './proxyInventory.js';
+import logger from '../../logger.js';
 
 /**
  * Proxy will be blocked if there are 5 consecutive failure

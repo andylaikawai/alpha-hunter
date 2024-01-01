@@ -9,7 +9,7 @@
     "strict": true,
     "noImplicitAny": false,
     "skipLibCheck": true,
-    "sourceMap": true
+    //    "sourceMap": true
     /* More options... */
   }
 //  "include": [
