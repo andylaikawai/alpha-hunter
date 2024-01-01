@@ -1,15 +1,15 @@
 import { binanceApi } from './api.js';
-import { log } from './util.js';
+import logger from './logger.js';
 
 
 export const newBinanceListing = async () => {
   const response = await binanceApi.getListingAnnouncement()
   if (response?.status === 200 && response?.data?.data) {
-    log(`[Heartbeat] Succeed`, true)
+    logger.info(`[Heartbeat] Succeed`, true)
     const latestArticle = response.data.data.articles[0];
     getListingCoinFromArticle(latestArticle)
   } else if (response?.data) {
-    // log(`[Heartbeat] Invalid response: ${JSON.stringify(response.data)}`, true)
+    logger.debug(`[Heartbeat] Invalid response: ${JSON.stringify(response.data)}`, true)
   }
 }
 
@@ -28,7 +28,7 @@ interface IArticle {
  */
 const getListingCoinFromArticle = (latestArticle: IArticle): void => {
   if (lastArticleCode !== latestArticle.code) {
-    log(`[Alert] New announcement found: ${latestArticle.title}`, true);
+    logger.info(`[Alert] New announcement found: ${latestArticle.title}`, true);
     lastArticleCode = latestArticle.code;
 
     const coinMatched = latestArticle.title.match(/\(([^)]+)/);
@@ -37,11 +37,11 @@ const getListingCoinFromArticle = (latestArticle: IArticle): void => {
 
     if (isNewCoinListing && coinMatched) {
       const coin = coinMatched[0].replace('(', '');
-      log(`[Alert] New listing coin found: ${coin}`, true);
+      logger.info(`[Alert] New listing coin found: ${coin}`, true);
 
       // TODO NOW YOU CAN BUY!
     } else {
-      log(`[Alert] Not a coin listing announcement`, true)
+      logger.info(`[Alert] Not a coin listing announcement`, true)
     }
   }
 };

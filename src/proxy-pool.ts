@@ -1,5 +1,5 @@
-import { log } from './util.js';
 import { PROXY_INVENTORY } from './proxy-inventory.js';
+import logger from './logger.js';
 
 /**
  * Proxy will be blocked if there are 5 consecutive failure
@@ -12,7 +12,7 @@ export class Proxy {
   private _failCount = 0
 
   private _priority: number
-  inUse: boolean
+  inUse: boolean = false
   host: string
   port: number
 
@@ -31,7 +31,7 @@ export class Proxy {
     this._priority -= 1
     this._failCount += 1
     if (this.isBlocked()) {
-      log(`[Proxy] Blocked proxy ${this.host}. Success count: ${this._successCount}. Failed count: ${this._failCount}`, true)
+      logger.info(`[Proxy] Blocked proxy ${this.host}. Success count: ${this._successCount}. Failed count: ${this._failCount}`, true)
     }
   }
 

@@ -1,7 +1,7 @@
 import express from 'express'
 import { main } from "./main.js";
-import { log } from "./util.js";
 import { binanceApi } from './api.js';
+import logger from './logger.js';
 
 const app = express();
 const port = 3000;
@@ -22,6 +22,6 @@ app.get('/fetch-listing', (req, res) => {
 });
 
 app.listen(port, () => {
-  log(`Alpha hunter listening on port ${port}`);
+  logger.info(`Alpha hunter listening on port ${port}`);
   main()
 });

@@ -1,6 +1,7 @@
 import { binanceUrls, gateUrls, kuCoinUrls } from "./config.js";
 import axios from 'axios';
 import { ProxyPool } from './proxy-pool.js';
+import logger from './logger.js';
 
 const headers = {
   "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
@@ -28,7 +29,7 @@ const fetch = async (url: string): Promise<any> => {
   proxy.inUse = true
 
   try {
-    // log(`[API] Sending request to ${proxy.host}:${proxy.port}`, true)
+    logger.debug(`[API] Sending request to ${proxy.host}:${proxy.port}`, true)
     const proxyConfig = {
       host: proxy.host,
       port: proxy.port,
@@ -42,7 +43,7 @@ const fetch = async (url: string): Promise<any> => {
     }
     return response
   } catch (error) {
-    // log(`[API] Error: ${error}`)
+    logger.debug(`[API] ${error}`)
     proxy.rankDown()
   } finally {
     proxy.inUse = false
