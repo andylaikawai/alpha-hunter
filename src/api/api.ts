@@ -4,10 +4,7 @@ import {
   KUCOIN_KLINE_URL,
   KUCOIN_MARKET_HISTORY_URL,
 } from "../config.js";
-import { ProxyPool } from './proxy/proxyPool.js';
-
-
-const proxyPool = new ProxyPool()
+import proxyPool from './proxy/proxyPool.js';
 
 const binanceUrls = {
   getBinanceListingAnnouncementUrl: () => {

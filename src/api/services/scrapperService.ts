@@ -1,16 +1,10 @@
 import { binanceApi } from '../api.js';
 import logger from '../../logger.js';
 import { Article } from '../types/types.js';
-import { API_THROTTLE } from '../../config.js';
+import proxyPool from '../proxy/proxyPool.js';
 
-
-/***
- * Hit binance listing announcement. Loop indefinitely per timeout in seconds
- *
- * @param timeout
- */
-export const scrapeNewBinanceListingCoinLoop = (timeout = API_THROTTLE) => {
-  const timeoutInMillisecond = timeout * 1000;
+export const scrapeNewBinanceListingCoinLoop = () => {
+  const timeoutInMillisecond = proxyPool.throttleSpeed() * 1000;
   scrapeNewBinanceListingCoin()
   setTimeout(scrapeNewBinanceListingCoinLoop, timeoutInMillisecond)
 };

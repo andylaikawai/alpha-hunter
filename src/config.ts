@@ -1,4 +1,3 @@
-export const API_THROTTLE = 0.1
 export const LOG_LEVEL: 'debug' | 'info' | 'error' = 'debug'
 
 const KUCOIN_BASE_URL = "https://api.kucoin.com/api/v1";

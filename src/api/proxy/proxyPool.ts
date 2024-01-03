@@ -7,7 +7,7 @@ import axios from 'axios';
  */
 class Proxy {
   private INITIAL_PRIORITY = 0
-  private PRIORITY_THRESHOLD = -2
+  private PRIORITY_THRESHOLD = -5
 
   private _successCount = 0
   private _failCount = 0
@@ -37,10 +37,13 @@ class Proxy {
   }
 
   isBlocked(): boolean {
-    return this._priority <= this.PRIORITY_THRESHOLD
+    return this._priority <= this.PRIORITY_THRESHOLD // 5 consecutive failure
+      && (this._successCount === 0 || this._successCount / this._failCount <= .2) // less than 10% successful rate
   }
 
   async fetch(url: string) {
+    const startTime = performance.now();
+    this.inUse = true
     try {
       logger.debug(`[Proxy] Sending request with proxy ${this.host}:${this.port}`, true)
       const proxyConfig = {
@@ -54,12 +57,17 @@ class Proxy {
       } else {
         this.rankDown()
       }
+
+      const endTime = performance.now();
+      logger.debug(`[Proxy] Response received in ${endTime - startTime}ms.`)
       return response
     } catch (error) {
-      logger.debug(`[Proxy] ${error}`)
+      const endTime = performance.now();
+      logger.debug(`[Proxy] Error received in ${endTime - startTime}ms. ${error}`)
       this.rankDown()
     } finally {
       this.inUse = false
+
     }
   }
 }
@@ -86,7 +94,8 @@ type ProxyHealth = {
   idle: number
 }
 
-export class ProxyPool {
+class ProxyPool {
+  private MIN_THROTTLE_SPEED = 1
   private _pool: Array<Proxy> = PROXY_INVENTORY.map(proxy => new Proxy(proxy.host, proxy.port))
   private _currentIndex: number = 0
 
@@ -95,7 +104,7 @@ export class ProxyPool {
     this._pool.push(this._pool.shift() as Proxy);
   }
 
-  private useProxy(): Proxy | undefined {
+  private useProxy(): Proxy | null {
     const startIndex = this._currentIndex;
     do {
       const currentProxy = this._pool[this._currentIndex];
@@ -104,14 +113,17 @@ export class ProxyPool {
         // try the next one.
         this._currentIndex = (this._currentIndex + 1) % this._pool.length;
       } else {
-        currentProxy.inUse = true
         return currentProxy;
       }
     } while (this._currentIndex !== startIndex); // Avoid infinite loop
 
-    // checked all proxies and none are valid, return undefined.
+    // checked all proxies and none are valid, return null.
     logger.debug(`Proxy pool exhausted. Health: ${JSON.stringify(this.health())}`)
-    return undefined;
+    return null;
+  }
+
+  private idleProxyPool() {
+    return this._pool.filter(proxy => !proxy.inUse && !proxy.isBlocked())
   }
 
   async fetch(url: string): Promise<any> {
@@ -123,11 +135,23 @@ export class ProxyPool {
     return proxy.fetch(url)
   }
 
+
   health(): ProxyHealth {
     return {
       inUse: this._pool.filter(proxy => proxy.inUse).length,
       blocked: this._pool.filter(proxy => proxy.isBlocked()).length,
-      idle: this._pool.filter(proxy => !proxy.inUse && !proxy.isBlocked()).length,
+      idle: this.idleProxyPool().length
     }
   }
+
+  throttleSpeed(): number {
+    if (this.idleProxyPool().length === 0) {
+      return this.MIN_THROTTLE_SPEED
+    }
+    return Math.min(this.MIN_THROTTLE_SPEED, 10 / this.idleProxyPool().length)
+  }
 }
+
+const proxyPool = new ProxyPool()
+
+export default proxyPool
