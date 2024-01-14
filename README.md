@@ -53,27 +53,6 @@ M&A news as an example, the chain of information pass like this:
 
 ## Why ChatGPT?
 
-In the fast-paced world of cryptocurrency trading, timely information and strategic
-decision-making are pivotal to success. My project serves as a cutting-edge tool that
-addresses both aspects through two core components:
-
-Real-Time News Scraping Engine: Leveraging modern web scraping technologies, this system
-continuously monitors and aggregates headlines from a wide array of reputable financial
-news sources. It is specifically tailored to detect news that could potentially influence
-cryptocurrency markets, ensuring traders receive the latest market-moving information as
-it happens.
-
-AI-Generated Trading Insights: At the heart of the decision-making process is an
-Artificial General Intelligence (AGI) model, similar to OpenAI's ChatGPT. This model
-processes the real-time data collected by the scraping engine and evaluates its potential
-impact on the crypto market. With its advanced natural language understanding
-capabilities, the AGI generates actionable trading insights, empowering traders to make
-informed decisions swiftly and efficiently.
-
-By integrating these two innovative components, the system offers a robust platform for
-crypto traders who seek to capitalize on market opportunities by staying ahead of news
-trends and utilizing AI-augmented analysis for trading decisions.
-
 Task List:
 
 1. Proper logging
