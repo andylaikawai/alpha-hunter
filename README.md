@@ -5,7 +5,7 @@ decision bot.
 
 ## Why real-time news?
 
-Here is the thesis. It is very hard to predict the market consistently except for a few
+It is very hard to _predict_ the market consistently except for a few
 like Warren Buffet. 85% of money managers can’t outperform their respective benchmark
 index funds like S&P500.
 
@@ -32,9 +32,9 @@ _(Why?)_
 > [Adapted from Yuval Noah Harari’s ‘Sapiens’, p.267f]
 </details>
 
-However, it is a lot easier to react to the market. You will need 2 things:
+However, it is a lot easier to _react_ to the market. We will need 2 things:
 
-First, you need to be early enough to be aware of the event occurrence. Take a typical
+First, we need to be _early enough_ to be aware of the event occurrence. Take a typical
 M&A news as an example, the chain of information pass like this:
 
 1. Insider (people who do the M&A deal )
@@ -44,10 +44,16 @@ M&A news as an example, the chain of information pass like this:
 
 (Now the event is supposed to be public, like a M&A announcement in a press conference)
 
-5. Proprietary news Channels (e.g. Bloomberg Terminal which you can't easily access)
-6. Public new channels (e.g. idk like Yahoo news?)
+5. Proprietary news Channels (e.g. Bloomberg Terminal which we can't easily access)
+6. Public news channels (e.g. Social media like Twitter, traditional media like
+   Cointelegraph)
 
-(TODO...)
+It is considered _early enough_ if beat 99% of the public at step 6 which is a relatively
+easier to solve. Since all public news channels are online channels, this is a solvable
+computational problem. Specifically, it is a competition of web scrappers so we need to be
+an expert in this area.
+
+Second, we need to react _fast_ enough and _accurate_ enough to the event.
 
 ## Why Crypto?
 
