@@ -1,6 +1,7 @@
 # First Light
 
-First List is a real-time Crypto market-moving news aggregator and ChatGPT4-Driven trading
+First Light is a real-time Crypto market-moving news aggregator and ChatGPT4-Driven
+trading
 decision bot.
 
 ## Why real-time news?
@@ -57,25 +58,37 @@ Second, we need to react _fast_ enough and _accurate_ enough to the event.
 
 ## Why Crypto?
 
+We need a less competitive yet highly liquid market. (TODO)
+
 ## Why ChatGPT?
 
-Task List:
+Because it is more important to react fast enough than right enough. It doesn't take a
+genius to understand what a below-expectation CPI means for the Bitcoin price (TODO give
+sample prompt and resposne). However, it takes a mathematically strong, unbiased,
+principled trader to be place a correct order on the correct asset with a correct risk
+exposure. It is reasonable to expect ChatGPT4 to be able to beat the majority of new
+traders in these areas.
 
-1. Proper logging
-2. Proxy health endpoint
-3. Deploy to cloud
-4. Evaluate performance
-5. Trade in CEX
+(TODO)
 
-AI Trader:
+## What is "First Light"
 
-1. Subscribe to news source (e.g. Tree news)
-2. Feed real-time news to AI
-3. AI make trading decision and back test performance / model-tuning
-4. Execute trade
-
-Technologies:
+## Technologies:
 
 - NodeJS
 - Typescript + ts-node (esm)
 - Jest
+
+## TODO List:
+
+1. Proxy health endpoint
+2. Deploy to cloud
+3. Evaluate scrapper performance
+4. Trade in CEX
+
+AI Trader:
+1. Subscribe to news source (e.g. Tree news)
+2. Feed real-time news to AI
+3. AI make trading decision
+4. Execute trade in CEX
+
