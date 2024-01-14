@@ -45,20 +45,24 @@ M&A news as an example, the chain of information pass like this:
 
 (Now the event is supposed to be public, like a M&A announcement in a press conference)
 
-5. Proprietary news Channels (e.g. Bloomberg Terminal which we can't easily access)
+5. Proprietary news channels (e.g. Bloomberg Terminal which we can't easily access)
 6. Public news channels (e.g. Social media like Twitter, traditional media like
    Cointelegraph)
 
-It is considered _early enough_ if beat 99% of the public at step 6 which is a relatively
-easier to solve. Since all public news channels are online channels, this is a solvable
-computational problem. Specifically, it is a competition of web scrappers so we need to be
-an expert in this area.
+It is considered _early enough_ if we beat 99% of the public at step 6 which is a
+relatively easier problem to solve. Since all public news channels are online channels,
+this is a solvable computational problem. Specifically, it is a competition of web
+scrappers so we need to be an expert in this area.
 
-Second, we need to react _fast_ enough and _accurate_ enough to the event.
+Second, we need to react _fast_ enough and _accurate_ enough to the event. From historical
+crypto market data seen from CEX, we need to place the order within 20s of the public news
+for a meaningful return (5% - 30% without leverage with hold period as short as 10-30
+minutes, depending on the news). In terms of accuracy, the requirement is low because we
+can simply set a very strict stop-loss level in case the direction of buy/sell order is
+wrong. This is a kind of risk control that is only available to news-driven trading, as
+opposed to traditional long/short strategies.
 
-## Why Crypto?
-
-We need a less competitive yet highly liquid market. (TODO)
+(TODO)
 
 ## Why ChatGPT?
 
@@ -70,6 +74,10 @@ exposure. It is reasonable to expect ChatGPT4 to be able to beat the majority of
 traders in these areas.
 
 (TODO)
+
+## Why Crypto?
+
+We need a less competitive yet highly liquid market. (TODO)
 
 ## What is "First Light"
 
@@ -87,6 +95,7 @@ traders in these areas.
 4. Trade in CEX
 
 AI Trader:
+
 1. Subscribe to news source (e.g. Tree news)
 2. Feed real-time news to AI
 3. AI make trading decision
